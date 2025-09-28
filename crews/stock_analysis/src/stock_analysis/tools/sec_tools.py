@@ -1,6 +1,6 @@
 import os
 from typing import Any, Optional, Type
-from pydantic.v1 import BaseModel, Field
+from pydantic import BaseModel, Field
 from crewai_tools import RagTool
 from sec_api import QueryApi  # Make sure to have sec_api installed
 from embedchain.models.data_type import DataType
@@ -24,7 +24,7 @@ class SEC10KToolSchema(FixedSEC10KToolSchema):
 class SEC10KTool(RagTool):
     name: str = "Search in the specified 10-K form"
     description: str = "A tool that can be used to semantic search a query from a 10-K form for a specified company."
-    args_schema: Type[BaseModel] = SEC10KToolSchema
+    args_schema: Type[BaseModel] = FixedSEC10KToolSchema
 
     def __init__(self, stock_name: Optional[str] = None, **kwargs):
         print("enter init")
@@ -37,7 +37,7 @@ class SEC10KTool(RagTool):
                 # print("exit init")
                 # exit()
                 self.description = f"A tool that can be used to semantic search a query from {stock_name}'s latest 10-K SEC form's content as a txt file."
-                self.args_schema = FixedSEC10KToolSchema
+                # self.args_schema = FixedSEC10KToolSchema
                 self._generate_description()
 
     def get_10k_url_content(self, stock_name: str) -> Optional[str]:
@@ -105,7 +105,7 @@ class SEC10QToolSchema(FixedSEC10QToolSchema):
 class SEC10QTool(RagTool):
     name: str = "Search in the specified 10-Q form"
     description: str = "A tool that can be used to semantic search a query from a 10-Q form for a specified company."
-    args_schema: Type[BaseModel] = SEC10QToolSchema
+    args_schema: Type[BaseModel] = FixedSEC10QToolSchema
 
     def __init__(self, stock_name: Optional[str] = None, **kwargs):
         print("enter init")
@@ -116,7 +116,7 @@ class SEC10QTool(RagTool):
             if content:
                 self.add(content)
                 self.description = f"A tool that can be used to semantic search a query from {stock_name}'s latest 10-Q SEC form's content as a txt file."
-                self.args_schema = FixedSEC10QToolSchema
+                # self.args_schema = FixedSEC10QToolSchema
                 self._generate_description()
 
     def get_10q_url_content(self, stock_name: str) -> Optional[str]:

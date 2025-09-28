@@ -10,8 +10,11 @@ from crewai_tools import WebsiteSearchTool, ScrapeWebsiteTool, TXTSearchTool
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain.llms import Ollama
-llm = Ollama(model="llama3.1")
+# from langchain.llms import Ollama
+# llm = Ollama(model="llama3.1")
+
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-4")
 
 @CrewBase
 class StockAnalysisCrew:
