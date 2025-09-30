@@ -1,78 +1,130 @@
-# AI Crew for Stock Analysis (Working Version)
+# AI Stock Analyst Crew
 
-  This is a **working version** of the CrewAI stock analysis example with compatibility fixes applied.
+> Multi-agent AI system that analyzes stocks using SEC filings, news, and market data
 
-  ## 🛠️ Fixes Applied
+**Built for:** Audience request for automated stock research using AI agents  
+**Build time:** ⏱️ 11 hours (including compatibility fixes)  
+**Part of:** [thexperiment.dev](https://thexperiment.dev)
 
-  This version addresses several compatibility issues found in the original example:
+---
 
-  1. **Python 3.13 → 3.12**: Fixes C++ compilation errors with chroma-hnswlib
-  2. **Calculator Tool Import**: Fixed `crewai_tools` → `crewai.tools` import
-  3. **Pydantic v2 Compatibility**: Updated from `pydantic.v1` to `pydantic`
-  4. **OpenAI instead of Ollama**: Configured for cloud LLM usage
-  5. **SEC Tool Schema**: Fixed parameter mismatch errors
+## 🎯 What It Does
 
-  ## 🚀 Quick Start
+Enter a stock ticker (e.g., AMZN) and watch three AI agents collaborate to produce a comprehensive investment report. The Financial Analyst reviews SEC filings, the Research Analyst gathers market sentiment, and the Investment Advisor synthesizes everything into actionable recommendations.
 
-  ### Prerequisites
-  - Python 3.12 (required for compatibility)
-  - uv package manager
-  - API keys for OpenAI, Serper, Browserless, and SEC-API
+**Note:** This runs entirely in the terminal - you'll see the agents "thinking" and collaborating in real-time as they research the stock.
 
-  ### Setup
-  ```bash
-  # Install Python 3.12 and set up environment
-  uv python install 3.12
-  uv python pin 3.12
-  uv sync
+---
 
-  # Configure API keys
-  cp .env.example .env
-  nano .env  # Add your API keys
+## ⚡ Tech Stack
 
-  # Run the analysis
-  uv run python src/stock_analysis/main.py
+- **Framework:** CrewAI (multi-agent orchestration)
+- **LLM:** OpenAI GPT-4
+- **Data Sources:** SEC-API (10-K, 10-Q filings), Serper (web search), Browserless (web scraping)
+- **Vector DB:** ChromaDB with HNSW
 
-  Required API Keys
+---
 
-  - OpenAI: https://platform.openai.com/api-keys
-  - Serper: https://serper.dev/
-  - Browserless: https://www.browserless.io/
-  - SEC-API: https://sec-api.io/
+## 🚀 Quick Start
 
-  📊 What It Does
+**Step 1: Get Your API Keys** (15 minutes)
+1. **OpenAI:** Go to [platform.openai.com](https://platform.openai.com/api-keys) → Create account → Generate API key
+2. **Serper:** Visit [serper.dev](https://serper.dev/) → Sign up → Get free 2,500 searches
+3. **Browserless:** Visit [browserless.io](https://www.browserless.io/) → Sign up for free trial
+4. **SEC-API:** Go to [sec-api.io](https://sec-api.io/) → Create account → Get API key
 
-  This CrewAI system analyzes Amazon (AMZN) stock using three specialized AI agents:
 
-  1. Financial Analyst - Analyzes SEC filings and financial metrics
-  2. Research Analyst - Gathers market news and sentiment
-  3. Investment Advisor - Synthesizes data into investment recommendations
+**Step 2: Download and Setup** (5 minutes)
+```bash
+# Download the project
+git clone https://github.com/irivelez/crewAI-examples.git
+cd crews
+cd stock_analysis
 
-  🔧 Technical Details
+# Copy the configuration template
+cp .env.example .env
 
-  - Framework: CrewAI for multi-agent orchestration
-  - LLM: OpenAI GPT-4
-  - Data Sources: SEC filings (10-K, 10-Q), web scraping
-  - Vector Database: ChromaDB with HNSW for document search
-  - Tools: Custom RAG tools, calculator, web scrapers
+# Edit .env file and paste your 4 API keys
+# (Use any text editor like Notepad, TextEdit, or nano)
+```
 
-  📝 Sample Output
+**Step 3: Install and Run** (5 minutes)
+```bash
+# Install Python environment manager (one-time setup)
+# Mac/Linux:
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-  The crew generates comprehensive investment reports including:
-  - Financial health analysis
-  - Growth metrics and ratios
-  - Risk assessment
-  - Buy/sell/hold recommendations
+# Windows:
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-  🐛 Known Issues
+# Install dependencies
+uv sync
 
-  - Web scraping may fail due to anti-bot protection (crew adapts gracefully)
-  - SSL certificate errors on some financial sites (non-critical)
+# Run the analysis
+uv run python src/stock_analysis/main.py
+```
 
-  📚 Original Documentation
+**What happens next:**
+- The terminal will show the agents working
+- You'll see them searching, analyzing, and discussing
+- After 2-5 minutes, you'll get a full investment report
+- Default stock: Amazon (AMZN).
 
-  See README_ORIGINAL.md for the original CrewAI example documentation.
+The crew will analyze AMZN (Amazon) by default. Edit `main.py` to change the stock ticker.
 
-  🤝 Contributing
+---
 
-  This is a working fork of the https://github.com/crewAIInc/crewAI-examples repository with fixes applied for real-world usage.
+## 💡 Why This Exists
+
+Someone asked: "quiero construir un CFA - AI que pueda hacer todas las funciones de un analista financiero, inversiones, revison de portafolios, asesor de inversion y financiero etc.. " This proves a CFA can be built. Three specialized agents collaborating to produce institutional-quality stock analysis.
+
+---
+
+## 🤖 The Agent Crew
+
+- **Financial Analyst** - Deep dives into SEC filings and financial metrics
+- **Research Analyst** - Gathers market news, sentiment, and trends
+- **Investment Advisor** - Synthesizes findings into buy/sell/hold recommendations
+
+---
+
+## 📊 Output Example
+
+Generates a comprehensive report with:
+- Financial health analysis
+- Growth metrics and valuation ratios
+- Risk assessment
+- Investment recommendation with reasoning
+
+---
+
+## ⚠️ Note
+
+This is a **working fork** of the official CrewAI example with Python 3.13 compatibility fixes applied. Original example had dependency conflicts. This version works out of the box.
+
+Here's what I fixed:
+- **Python 3.13 compatibility issues** - Downgraded to 3.12 to fix C++ compilation errors
+- **Import path bugs** - Fixed `crewai_tools` → `crewai.tools`
+- **Pydantic v2 migration** - Updated deprecated `pydantic.v1` imports
+- **SEC Tool schema errors** - Fixed parameter mismatches
+- **Dependency conflicts** - Resolved ChromaDB HNSW issues
+
+Real-world debugging > following tutorials. This version works first try.
+
+---
+
+## ⚠️ Troubleshooting
+
+**"Command not found: uv"**  
+→ Run the install script again from Step 3, then restart your terminal
+
+**"API key error"**  
+→ Check your .env file has all 4 keys (no quotes needed, one per line)
+
+**Agents seem stuck**  
+→ It's normal! GPT-4 can take 30-60 seconds per agent. Watch the terminal output.
+
+---
+
+**⚡ Built in 11 hours • Part of [thexperiment.dev](https://thexperiment.dev)**
+
